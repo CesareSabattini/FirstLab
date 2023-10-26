@@ -5,9 +5,6 @@ m_name{particleName}, m_mass{particleMass}, m_charge{particleCharge}
 {
 }
 
-ParticleType::~ParticleType()
-{
-}
 
 std::string ParticleType::getName() const{
 return m_name;

@@ -2,10 +2,9 @@
 #define RESONANCE_TYPE_H
 #include"ParticleType.hpp"
 
-class ResonanceType: protected ParticleType{
+class ResonanceType: private ParticleType{
 public:
-ResonanceType(const double width, const std::string name, const double mass, const int charge);
-~ResonanceType() override;
+ResonanceType( const std::string name, const double mass, const int charge, const double width);
 double getWidth() const;
 const void print() override;
 private:
