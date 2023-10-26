@@ -8,5 +8,5 @@ return m_width;
 }
 const void ResonanceType::print(){
 ParticleType::print();
-std::cout<<"Width"<<m_width<<std::endl;
+std::cout<<"Width:"<<m_width<<std::endl;
 }

@@ -2,7 +2,7 @@
 #define RESONANCE_TYPE_H
 #include"ParticleType.hpp"
 
-class ResonanceType: private ParticleType{
+class ResonanceType: public ParticleType{
 public:
 ResonanceType( const std::string name, const double mass, const int charge, const double width);
 double getWidth() const;
