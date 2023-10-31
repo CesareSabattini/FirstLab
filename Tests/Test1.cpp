@@ -1,16 +1,26 @@
-#include "ParticleType.hpp"
-#include "ResonanceType.hpp"
-#include "Particle.hpp"
+
+#include "../Classes/ParticleType.hpp"
+#include "../Classes/ResonanceType.hpp"
 #include<array>
 
 int main() {
-    ParticleType particletype("carlone", 100.5 , 2000);
-    ResonanceType resonancetype("stefanino", 100.5, 2000, 100);
-    Particle particle("carlone", 10,10,20);
- std::array<ParticleType*,2> typeArray{&particletype, &resonancetype};
- for(int i=0; i<=1; i++){
-typeArray[i]->print();
- }
+    ParticleType particleType("K+", 0.493 ,1);
+    ResonanceType resonanceType("K*", 0.892, 0, 0.05);
 
-    return 0;
+//ParticleType methods tests
+std::cout<<"Name:\t"<<particleType.getName()<<std::endl;
+std::cout<<"Mass:\t"<<particleType.getMass()<<std::endl;
+std::cout<<"Charge:\t"<<particleType.getCharge()<<std::endl<<std::endl;
+
+particleType.print();
+std::cout<<std::endl;
+
+//ResonanceType methods tests
+std::cout<<"Name:\t"<<resonanceType.getName()<<std::endl;
+std::cout<<"Mass:\t"<<resonanceType.getMass()<<std::endl;
+std::cout<<"Charge:\t"<<resonanceType.getCharge()<<std::endl;
+std::cout<<"Width:\t"<<resonanceType.getWidth()<<std::endl<<std::endl;
+
+resonanceType.print();
+
 }

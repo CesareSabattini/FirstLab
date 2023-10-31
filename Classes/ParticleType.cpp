@@ -1,5 +1,5 @@
 #include"ParticleType.hpp"
-
+ 
 ParticleType::ParticleType(const std::string particleName, const double particleMass, const int particleCharge): 
 m_name{particleName}, m_mass{particleMass}, m_charge{particleCharge}
 {

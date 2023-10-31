@@ -1,7 +1,10 @@
 #include"Particle.hpp"
 #include<cmath>
 
-Particle::Particle(const std::string name, double impulseX=0, double impulseY=0, double impulseZ=0){
+std::vector<ParticleType*> Particle::m_particle_type;
+int Particle::m_nParticleType=0;
+
+Particle::Particle(const std::string name, double impulseX, double impulseY, double impulseZ){
 m_index=findParticle(name);
 m_nParticleType= m_particle_type.size();
 
@@ -9,29 +12,34 @@ m_nParticleType= m_particle_type.size();
 }
 
 int Particle::findParticle(const std::string name){
-    for(int i{}; i<=m_particle_type.size(); i++){
+    for(int i{}; i<=static_cast<int>(m_particle_type.size()); i++){
         if(m_particle_type[i]->getName()==name){
 return i;
         }
-         else{return -1;}
     }
    
-
 }
 
 int Particle::getIndex() const{
     return m_index;
 }
 
-void Particle::addParticleType(std::string name, double mass, double charge, double width=0){
+void Particle::addParticleType(std::string name, double mass, double charge, double width){
 if(m_nParticleType<m_maxNumParticleType){
     ResonanceType* newType= new  ResonanceType(name, mass, charge, width);
     if(width=0){dynamic_cast<ParticleType*>(newType);}
 m_particle_type.push_back(newType);
 m_nParticleType=m_particle_type.size();
 }
-
 }
+
+const void Particle::addParticleType(ParticleType* particleType){
+if(m_nParticleType<m_maxNumParticleType){
+m_particle_type.push_back(particleType);
+m_nParticleType=m_particle_type.size();
+}
+};
+
 //unsigned int, const print
 void Particle::setIndex(int index){
 if(index<=m_nParticleType){
