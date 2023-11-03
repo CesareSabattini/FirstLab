@@ -23,3 +23,8 @@ std::cout<<"Name:"<<m_name<<std::endl;
 std::cout<<"Mass:"<<m_mass<<std::endl;
 std::cout<<"Charge:"<<m_charge<<std::endl;
 }
+
+double ParticleType::getWidth() const{
+
+    return 0;
+}

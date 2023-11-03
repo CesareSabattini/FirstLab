@@ -10,7 +10,7 @@ ParticleType(const std::string name, const double mass, const int charge);
  double getMass() const;
  int getCharge() const;
  virtual const void print();
-
+virtual double getWidth()const ;
 private:
 const std::string m_name;
 const double m_mass;

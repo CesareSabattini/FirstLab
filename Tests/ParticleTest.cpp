@@ -10,5 +10,7 @@ Particle resonance("K*", 0.892, 0, 0.05);
 particle.print();
 std::cout<<std::endl;
 resonance.print();
+std::cout<<std::endl;
+Particle::printArray();
 
 }
