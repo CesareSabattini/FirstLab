@@ -2,6 +2,13 @@
 #include"../Classes/ResonanceType.hpp"
 #include"../Classes/Particle.hpp"
 #include<cmath>
+#include"TMath.h"
+#include"TH1.h"
+#include"TH2.h"
+#include"TRandom.h"
+#include"TCanvas.h"
+#include"TFile.h"
+
 int macro(){
 Particle::addParticleType("Pione", 0.13957,1);
 Particle::addParticleType("Kaone", 0.49367 ,1);
