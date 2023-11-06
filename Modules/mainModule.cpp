@@ -1,7 +1,6 @@
 #include"../Classes/ParticleType.hpp"
 #include"../Classes/ResonanceType.hpp"
 #include"../Classes/Particle.hpp"
-#include<cmath>
 #include"TMath.h"
 #include"TH1.h"
 #include"TH2.h"
@@ -21,30 +20,30 @@ gRandom->SetSeed();
 std::array<Particle, 120> eventParticles{};
 int numDecays=0;
 
-TH1I* HTypes= new TH1I("HTypes", "Types of particles", 8, 0,8);
-TH2D* HAngles= new TH2D("HAngles", "Angles", 1000, 0,2*3.5, 1000, 0,3.5);//???
-TH1D* HP= new TH1D("HP", "Impulse",200, 0, 10 );
-TH1D* HTransverseImpulse= new TH1D("HTransverseImpulse","Transverse Impulse", 200, 0, 10 );
+TH1I* HTypes= new TH1I("HTypes", "Types of particles distribution", 8, 0,8);
+TH2D* HAngles= new TH2D("HAngles", "Angles distribution", 1000, 0,2*3.5, 1000, 0,3.5);
+TH1D* HP= new TH1D("HP", "Momentum distribution",200, 0, 10 );
+TH1D* HTransverseImpulse= new TH1D("HTransverseImpulse","Transverse Momentum distribution", 200, 0, 10 );
 TH1D* HEnergy= new TH1D("HEnergy"," Energy", 200, 0,10 );
-TH1D* HInvariantMass= new TH1D("HInvariantMass"," Invariant Mass", 1000, 0,5 );
+TH1D* HInvariantMass= new TH1D("HInvariantMass"," Invariant Mass distribution", 900, 0,5 );
 HInvariantMass->Sumw2();
-TH1D* HMassDiscorde = new TH1D("HMassDiscorde", "", 1000, 0,5);
+TH1D* HMassDiscorde = new TH1D("HMassDiscorde", "Invariant Mass for opposite charged particles distribution", 1000, 0,5);
 HMassDiscorde->Sumw2();
-TH1D* HMassConcorde = new TH1D("HMassConcorde", "", 1000, 0,5);
+TH1D* HMassConcorde = new TH1D("HMassConcorde", "Invariant Mass for concordant charged particles distribution", 1000, 0,5);
 HMassConcorde->Sumw2();
-TH1D* HMassPioneKaoneDiscorde = new TH1D("HMassPioneKaoneDiscorde", "", 1000, 0,5);
+TH1D* HMassPioneKaoneDiscorde = new TH1D("HMassPioneKaoneDiscorde", "Invariant Mass for opposite charged Pion and Kaon distribution", 1000, 0,5);
 HMassPioneKaoneDiscorde->Sumw2();
-TH1D* HMassPioneKaoneConcorde = new TH1D("HMassPioneKaoneConcorde", "", 1000, 0,5);
+TH1D* HMassPioneKaoneConcorde = new TH1D("HMassPioneKaoneConcorde", "Invariant Mass for concordant charged Pion and Kaon distribution", 1000, 0,5);
 HMassPioneKaoneConcorde->Sumw2();
-TH1D* HMassKDecay = new TH1D("HMassKDecay", "Benchmark", 1000, 0,5);
+TH1D* HMassKDecay = new TH1D("HMassKDecay", "Invariant Mass for the children of each decay distribution", 1000, 0,5);
 HMassKDecay->Sumw2();
 
 
 for(int i=0;i<1E3;i++ ){
 numDecays=0;
 for(int j=0; j<=100;j++){
-    double phi= gRandom->Uniform(0,2*3.14);
-    double theta= gRandom->Uniform(0,3.14);
+    double phi= gRandom->Uniform(0,2*TMath::Pi());
+    double theta= gRandom->Uniform(0,TMath::Pi());
     HAngles->Fill(phi,theta);
 double probability{};
 probability=gRandom->Rndm();
@@ -137,56 +136,93 @@ HMassPioneKaoneConcorde->Fill(eventParticles[k].getInvariantMass(eventParticles[
 
 }
 
-TCanvas* canvas= new TCanvas("canvas","canvas1", 1000,1000);
-canvas->Divide(4,3);
+TCanvas* canvas1= new TCanvas("TypesCanvas","canvas1", 1000,1000);
 
-TFile* file = new TFile("example.root","recreate");
-file->Write();
-
-canvas->cd(1);
+TFile* file1 = new TFile("Types.root","recreate");
+file1->Write();
 HTypes->Draw();
 HTypes->Write();
+file1->Close();
 
-canvas->cd(2);
+TCanvas* canvas2= new TCanvas("AnglesCanvas","canvas2", 1000,1000);
+
+TFile* file2 = new TFile("Angles.root","recreate");
+file2->Write();
 HAngles->Draw();
 HAngles->Write();
+file2->Close();
 
-canvas->cd(3);
+TCanvas* canvas3= new TCanvas("MomentumCanvas","canvas3", 1000,1000);
+
+TFile* file3 = new TFile("Momentum.root","recreate");
+file3->Write();
 HP->Draw();
 HP->Write();
+file3->Close();
 
-canvas->cd(4);
+TCanvas* canvas4= new TCanvas("TransverseMomentumCanvas","canvas4", 1000,1000);
+
+TFile* file4 = new TFile("TransverseMomentum.root","recreate");
+file4->Write();
 HTransverseImpulse->Draw();
 HTransverseImpulse->Write();
+file4->Close();
 
-canvas->cd(5);
+TCanvas* canvas5= new TCanvas("EnergyCanvas","canvas5", 1000,1000);
+
+TFile* file5 = new TFile("Energy.root","recreate");
+file5->Write();
 HEnergy->Draw();
 HEnergy->Write();
+file5->Close();
 
-canvas->cd(6);
- HInvariantMass->Draw();
- HInvariantMass->Write();
+TCanvas* canvas6= new TCanvas("InvariantMassCanvas","canvas6", 1000,1000);
 
- canvas->cd(7);
- HMassDiscorde ->Draw();
- HMassDiscorde->Write();
+TFile* file6 = new TFile("InvariantMass.root","recreate");
+file6->Write();
+HInvariantMass->Draw();
+HInvariantMass->Write();
+file6->Close();
 
- canvas->cd(8);
- HMassConcorde->Draw();
- HMassConcorde->Write();
+TCanvas* canvas7= new TCanvas("DiscordantMassCanvas","canvas7", 1000,1000);
 
- canvas->cd(9);
-HMassPioneKaoneDiscorde ->Draw();
+TFile* file7 = new TFile("DiscordantMass.root","recreate");
+file7->Write();
+HMassDiscorde->Draw();
+HMassDiscorde->Write();
+file7->Close();
+
+TCanvas* canvas8= new TCanvas("ConcondantMassCanvas","canvas8", 1000,1000);
+
+TFile* file8 = new TFile("ConcordantMass.root","recreate");
+file8->Write();
+HMassConcorde->Draw();
+HMassConcorde->Write();
+file8->Close();
+
+TCanvas* canvas9= new TCanvas("DiscordantPKMassCanvas","canvas9", 1000,1000);
+
+TFile* file9 = new TFile("DiscordantPKMass.root","recreate");
+file9->Write();
+HMassPioneKaoneDiscorde->Draw();
 HMassPioneKaoneDiscorde->Write();
+file9->Close();
 
-canvas->cd(10);
-HMassPioneKaoneConcorde ->Draw();
+TCanvas* canvas10= new TCanvas("ConcordantPKMassCanvas","canvas10", 1000,1000);
+
+TFile* file10 = new TFile("ConcordantPKMass.root","recreate");
+file10->Write();
+HMassPioneKaoneConcorde->Draw();
 HMassPioneKaoneConcorde->Write();
+file10->Close();
 
-canvas->cd(11);
+TCanvas* canvas11= new TCanvas("DecayMassCanvas","canvas11", 1000,1000);
+
+TFile* file11 = new TFile("DecayMass.root","recreate");
+file11->Write();
 HMassKDecay->Draw();
 HMassKDecay->Write();
-file->Close();
+file11->Close();
 
 return 0;
 }
