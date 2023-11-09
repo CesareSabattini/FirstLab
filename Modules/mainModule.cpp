@@ -39,7 +39,7 @@ TH1D* HMassKDecay = new TH1D("HMassKDecay", "Invariant Mass for the children of 
 HMassKDecay->Sumw2();
 
 
-for(int i=0;i<1E3;i++ ){
+for(int i=0;i<1E5;i++ ){
 numDecays=0;
 for(int j=0; j<=100;j++){
     double phi= gRandom->Uniform(0,2*TMath::Pi());
@@ -138,91 +138,61 @@ HMassPioneKaoneConcorde->Fill(eventParticles[k].getInvariantMass(eventParticles[
 
 TCanvas* canvas1= new TCanvas("TypesCanvas","canvas1", 1000,1000);
 
-TFile* file1 = new TFile("Types.root","recreate");
-file1->Write();
+TFile* file = new TFile("Types.root","recreate");
+file->Write();
 HTypes->Draw();
 HTypes->Write();
-file1->Close();
+
 
 TCanvas* canvas2= new TCanvas("AnglesCanvas","canvas2", 1000,1000);
-
-TFile* file2 = new TFile("Angles.root","recreate");
-file2->Write();
 HAngles->Draw();
 HAngles->Write();
-file2->Close();
 
 TCanvas* canvas3= new TCanvas("MomentumCanvas","canvas3", 1000,1000);
 
-TFile* file3 = new TFile("Momentum.root","recreate");
-file3->Write();
 HP->Draw();
 HP->Write();
-file3->Close();
 
 TCanvas* canvas4= new TCanvas("TransverseMomentumCanvas","canvas4", 1000,1000);
 
-TFile* file4 = new TFile("TransverseMomentum.root","recreate");
-file4->Write();
 HTransverseImpulse->Draw();
 HTransverseImpulse->Write();
-file4->Close();
 
 TCanvas* canvas5= new TCanvas("EnergyCanvas","canvas5", 1000,1000);
 
-TFile* file5 = new TFile("Energy.root","recreate");
-file5->Write();
 HEnergy->Draw();
 HEnergy->Write();
-file5->Close();
 
 TCanvas* canvas6= new TCanvas("InvariantMassCanvas","canvas6", 1000,1000);
 
-TFile* file6 = new TFile("InvariantMass.root","recreate");
-file6->Write();
 HInvariantMass->Draw();
 HInvariantMass->Write();
-file6->Close();
 
 TCanvas* canvas7= new TCanvas("DiscordantMassCanvas","canvas7", 1000,1000);
 
-TFile* file7 = new TFile("DiscordantMass.root","recreate");
-file7->Write();
 HMassDiscorde->Draw();
 HMassDiscorde->Write();
-file7->Close();
 
 TCanvas* canvas8= new TCanvas("ConcondantMassCanvas","canvas8", 1000,1000);
 
-TFile* file8 = new TFile("ConcordantMass.root","recreate");
-file8->Write();
 HMassConcorde->Draw();
 HMassConcorde->Write();
-file8->Close();
 
 TCanvas* canvas9= new TCanvas("DiscordantPKMassCanvas","canvas9", 1000,1000);
 
-TFile* file9 = new TFile("DiscordantPKMass.root","recreate");
-file9->Write();
 HMassPioneKaoneDiscorde->Draw();
 HMassPioneKaoneDiscorde->Write();
-file9->Close();
 
 TCanvas* canvas10= new TCanvas("ConcordantPKMassCanvas","canvas10", 1000,1000);
 
-TFile* file10 = new TFile("ConcordantPKMass.root","recreate");
-file10->Write();
 HMassPioneKaoneConcorde->Draw();
 HMassPioneKaoneConcorde->Write();
-file10->Close();
 
 TCanvas* canvas11= new TCanvas("DecayMassCanvas","canvas11", 1000,1000);
 
-TFile* file11 = new TFile("DecayMass.root","recreate");
-file11->Write();
 HMassKDecay->Draw();
 HMassKDecay->Write();
-file11->Close();
+file->Close();
 
 return 0;
 }
