@@ -34,21 +34,21 @@ int macro() {
   TH1D *HMassDiscorde =
       new TH1D("HMassDiscorde",
                "Invariant Mass for opposite charged particles distribution",
-               2000, 0.7, 1.1);
+               40, 0.7, 1.1);
   HMassDiscorde->Sumw2();
   TH1D *HMassConcorde =
       new TH1D("HMassConcorde",
                "Invariant Mass for concordant charged particles distribution",
-               2000, 0.7, 1.1);
+               40, 0.7, 1.1);
   HMassConcorde->Sumw2();
   TH1D *HMassPioneKaoneDiscorde =
       new TH1D("HMassPioneKaoneDiscorde",
                "Invariant Mass for opposite charged Pion and Kaon distribution",
-               2000, 0.7, 1.1);
+               40, 0.7, 1.1);
   HMassPioneKaoneDiscorde->Sumw2();
   TH1D *HMassPioneKaoneConcorde = new TH1D(
       "HMassPioneKaoneConcorde",
-      "Invariant Mass for concordant charged Pion and Kaon distribution", 2000,
+      "Invariant Mass for concordant charged Pion and Kaon distribution", 40,
       0.7, 1.1);
   HMassPioneKaoneConcorde->Sumw2();
   TH1D *HMassKDecay =
@@ -213,6 +213,9 @@ int macro() {
   HMassPioneKaoneConcorde->Write();
 
   canvas2->cd(6);
+
+  HMassKDecay->GetXaxis()->SetName("Invariant Mass(GeV/c^2)");
+  HMassKDecay->GetYaxis()->SetName("Counts");
   HMassKDecay->Draw();
   HMassKDecay->Write();
 

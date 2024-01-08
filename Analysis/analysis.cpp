@@ -78,12 +78,17 @@ int main() {
   TF1 *thetaFit = new TF1("thetaFit", "[0]", 0, 3.5);
   thetaFit->SetParameter(0, 1e7 / 1000);
   HistoAngles->ProjectionX()->Fit(thetaFit);
+  HistoAngles->ProjectionX()->GetXaxis()->SetTitle("Theta (rad)");
+  HistoAngles->ProjectionX()->GetYaxis()->SetTitle("Counts");
   HistoAngles->ProjectionX()->Draw();
+ 
 
   firstCanvas->cd(2);
   TF1 *phiFit = new TF1("phiFit", "[0]", 0, 7);
   phiFit->SetParameter(0, 1e7 / 1000);
   HistoAngles->ProjectionY()->Fit(phiFit);
+  HistoAngles->ProjectionY()->GetXaxis()->SetTitle("Phi(rad)");
+  HistoAngles->ProjectionY()->GetYaxis()->SetTitle("Counts");
   HistoAngles->ProjectionY()->Draw();
 
   std::cout << "ThetaEntries=" << thetaFit->GetParameter(0);
@@ -101,8 +106,11 @@ int main() {
   std::cout << "PhiFit Probability=" << phiFit->GetProb();
   std::cout << std::endl;
 
+  firstCanvas->cd(3);
   TF1 *impulseFit = new TF1("impulseFit", "exp([0]+[1]*x)", 0, 10);
   impulseFit->SetParameters(3, 1);
+  HistoImpulse->GetXaxis()->SetTitle("Impulse Module (GeV/c^2*m/s)");
+  HistoImpulse->GetYaxis()->SetTitle("Counts");
   HistoImpulse->Fit(impulseFit);
   std::cout << "ImpulseFit par1=" << impulseFit->GetParameter(0);
   std::cout << std::endl;
@@ -113,7 +121,7 @@ int main() {
   std::cout << std::endl;
   std::cout << "ImpulseFit Probability=" << impulseFit->GetProb();
   std::cout << std::endl;
-  firstCanvas->cd(3);
+
   HistoImpulse->Draw();
 
   firstCanvas->cd(4);
@@ -123,43 +131,67 @@ int main() {
       "secondCanvas", "Invariant Mass Histos subtractions", 1000, 1000);
   secondCanvas->Divide(2, 2);
   secondCanvas->cd(1);
-  HistoInvariantMass->Draw();
+    TF1 *gaussFit3 = new TF1("gaussFit3", fitFunction, 0.7, 1.1, 3); 
+  gaussFit3->SetParameters(1.78, 0.89, 0.05);
+  HistoMassDecay->Draw();
+  HistoMassDecay->Fit(gaussFit3);
+  std::cout<< "VALORI DELLA MASSA INVARIANTE DELLE K* VERE"<<std::endl;
+  std::cout << "par1=" << gaussFit3->GetParameter(0);
+  std::cout << std::endl;
+  std::cout << "par2=" << gaussFit3->GetParameter(1);
+  std::cout << std::endl;
+  std::cout << "Reduced ChiSquare="
+            << gaussFit3->GetChisquare() / gaussFit3->GetNDF();
+  std::cout << std::endl;
+  std::cout << "Fit Probability=" << gaussFit3->GetProb();
+  std::cout << std::endl;
+
   secondCanvas->cd(2);
+
+
   TF1 *gaussFit1 = new TF1("gaussFit1", fitFunction, 0.7, 1.1, 3); 
   gaussFit1->SetParameters(1.78, 0.89, 0.05);
   TH1D *DifferenzaGenerale =
-      new TH1D("DifferenzaGenerale", "DifferenzaGenerale", 1000, 0.7, 1.1);
+      new TH1D("DifferenzaGenerale", "DifferenzaGenerale", 40, 0.7, 1.1);
+
   DifferenzaGenerale->Sumw2();
   DifferenzaGenerale->Add(HistoInvariantMassDiscordant, 1);
   DifferenzaGenerale->Add(HistoInvariantMassConcordant, -1);
+  DifferenzaGenerale->GetXaxis()->SetTitle("Invariant Mass(GeV/c^2)");
+  DifferenzaGenerale->GetYaxis()->SetTitle("Counts");
   DifferenzaGenerale->Fit(gaussFit1);
-  std::cout << "GaussFit1 par1=" << gaussFit1->GetParameter(0);
+  std::cout << "par1=" << gaussFit1->GetParameter(0);
   std::cout << std::endl;
-  std::cout << "GaussFit1 par2=" << gaussFit1->GetParameter(1);
+  std::cout << "par2=" << gaussFit1->GetParameter(1);
   std::cout << std::endl;
-  std::cout << "GaussFit1 Reduced ChiSquare="
+  std::cout << "Reduced ChiSquare="
             << gaussFit1->GetChisquare() / gaussFit1->GetNDF();
   std::cout << std::endl;
-  std::cout << "GaussFit1 Probability=" << gaussFit1->GetProb();
+  std::cout << "Fit Probability=" << gaussFit1->GetProb();
   std::cout << std::endl;
   DifferenzaGenerale->Draw();
   secondCanvas->cd(3);
+
+
   TF1 *gaussFit2 = new TF1("gaussFit2", fitFunction, 0.7, 1.1, 3); 
   gaussFit2->SetParameters(1.78, 0.89, 0.05);
   TH1D *DifferenzaPioneKaone =
-      new TH1D("DifferenzaPioneKaone", "DifferenzaPioneKaone", 1000, 0.7, 1.1);
+      new TH1D("DifferenzaPioneKaone", "DifferenzaPioneKaone", 40, 0.7, 1.1);
   DifferenzaPioneKaone->Sumw2();
   DifferenzaPioneKaone->Add(HistoMassPioneKaoneDiscorde, 1);
   DifferenzaPioneKaone->Add(HistoMassPioneKaoneConcorde, -1);
+   DifferenzaPioneKaone->GetXaxis()->SetTitle("Invariant Mass(GeV/c^2)");
+  DifferenzaPioneKaone->GetYaxis()->SetTitle("Counts");
   DifferenzaPioneKaone->Fit(gaussFit2);
-    std::cout << "GaussFit2 par1=" << gaussFit2->GetParameter(0);
+
+    std::cout << "par1=" << gaussFit2->GetParameter(0);
   std::cout << std::endl;
-  std::cout << "GaussFit2 par2=" << gaussFit2->GetParameter(1);
+  std::cout << "par2=" << gaussFit2->GetParameter(1);
   std::cout << std::endl;
-  std::cout << "GaussFit2 Reduced ChiSquare="
+  std::cout << "Reduced ChiSquare="
             << gaussFit2->GetChisquare() / gaussFit2->GetNDF();
   std::cout << std::endl;
-  std::cout << "GaussFit2 Probability=" << gaussFit2->GetProb();
+  std::cout << "Fit Probability=" << gaussFit2->GetProb();
   std::cout << std::endl;
   DifferenzaPioneKaone->Draw();
 
