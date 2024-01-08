@@ -10,9 +10,9 @@ double ParticleType::getMass() const { return m_mass; }
 
 int ParticleType::getCharge() const { return m_charge; }
 const void ParticleType::print() {
-    std::cout << "Name:" << m_name << std::endl;
-    std::cout << "Mass:" << m_mass << std::endl;
-    std::cout << "Charge:" << m_charge << std::endl;
+  std::cout << "Name:" << m_name << std::endl;
+  std::cout << "Mass:" << m_mass << std::endl;
+  std::cout << "Charge:" << m_charge << std::endl;
 }
 
 double ParticleType::getWidth() const { return 0; }
